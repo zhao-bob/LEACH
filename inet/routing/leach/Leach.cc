@@ -6,7 +6,7 @@
 #include "inet/linklayer/common/InterfaceTag_m.h"
 #include "inet/networklayer/common/L3AddressTag_m.h"
 #include "inet/routing/leach/Leach.h"
-#include "inet/physicallayer/contract/packetlevel/SignalTag_m.h"
+#include "inet/physicallayer/wireless/common/contract/packetlevel/SignalTag_m.h"
 #include "inet/networklayer/common/L3AddressResolver.h"
 
 #include <list>
@@ -146,8 +146,8 @@ namespace inet {
 
         // Search the 802154 interface
         int  num_802154 = 0;
-        InterfaceEntry *ie;
-        InterfaceEntry *i_face;
+        NetworkInterface *ie;
+        NetworkInterface *i_face;
         const char *name;
         broadcastDelay = &par("broadcastDelay");
         for (int i = 0; i < ift->getNumInterfaces(); i++)
@@ -167,7 +167,7 @@ namespace inet {
             interface80211ptr = i_face;
         else
             throw cRuntimeError("DSDV has found %i 80211 interfaces", num_802154);
-        CHK(interface80211ptr->getProtocolData<Ipv4InterfaceData>())->joinMulticastGroup(Ipv4Address::LL_MANET_ROUTERS);
+        CHK(interface80211ptr->getProtocolDataForUpdate<Ipv4InterfaceData>())->joinMulticastGroup(Ipv4Address::LL_MANET_ROUTERS);
 
         // schedules a random periodic event
         event->setKind(SELF);

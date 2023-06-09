@@ -12,6 +12,9 @@
 
 #include "inet/common/INETDefs.h"
 #include "inet/common/packet/Packet.h"
+#include "inet/common/geometry/common/Coord.h"
+#include "inet/mobility/contract/IMobility.h"
+#include "inet/power/contract/ICcEnergyStorage.h"
 #include "inet/networklayer/contract/IInterfaceTable.h"
 #include "inet/networklayer/contract/ipv4/Ipv4Address.h"
 #include "inet/networklayer/ipv4/IIpv4RoutingTable.h"
@@ -45,7 +48,7 @@ class INET_API Leach : public RoutingProtocolBase
     cMessage *event = nullptr;
     cPar *broadcastDelay = nullptr;
     std::list<ForwardEntry *> *forwardList  = nullptr;
-    InterfaceEntry *interface80211ptr = nullptr;
+    NetworkInterface *interface80211ptr = nullptr;
     int interfaceId = -1;
     unsigned int sequencenumber = 0;
     simtime_t routeLifetime;
@@ -53,7 +56,7 @@ class INET_API Leach : public RoutingProtocolBase
 
     Ipv4Address idealCH;
 
-    cMessage *event = nullptr;
+//    cMessage *event = nullptr;
 
     simsignal_t subIntervalTot;
 

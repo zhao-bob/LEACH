@@ -39,7 +39,7 @@ public:
     virtual ~LeachBS();
 
     int interfaceId = -1;
-    InterfaceEntry *interface80211ptr = nullptr;
+    NetworkInterface *interface80211ptr = nullptr;
     IInterfaceTable *ift = nullptr;
     unsigned int sequencenumber = 0;
     cModule *host = nullptr;

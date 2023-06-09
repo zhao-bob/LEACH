@@ -1,5 +1,5 @@
 //
-// Generated file, do not edit! Created by nedtool 5.6 from inet/routing/leach/LeachPkts.msg.
+// Generated file, do not edit! Created by opp_msgtool 6.0 from inet/routing/leach/LeachPkts.msg.
 //
 
 // Disable warnings about unused variables, empty switch stmts, etc:
@@ -27,6 +27,7 @@
 #include <iostream>
 #include <sstream>
 #include <memory>
+#include <type_traits>
 #include "LeachPkts_m.h"
 
 namespace omnetpp {
@@ -149,71 +150,380 @@ void doParsimUnpacking(omnetpp::cCommBuffer *, T& t)
 
 }  // namespace omnetpp
 
-namespace {
-template <class T> inline
-typename std::enable_if<std::is_polymorphic<T>::value && std::is_base_of<omnetpp::cObject,T>::value, void *>::type
-toVoidPtr(T* t)
-{
-    return (void *)(static_cast<const omnetpp::cObject *>(t));
-}
-
-template <class T> inline
-typename std::enable_if<std::is_polymorphic<T>::value && !std::is_base_of<omnetpp::cObject,T>::value, void *>::type
-toVoidPtr(T* t)
-{
-    return (void *)dynamic_cast<const void *>(t);
-}
-
-template <class T> inline
-typename std::enable_if<!std::is_polymorphic<T>::value, void *>::type
-toVoidPtr(T* t)
-{
-    return (void *)static_cast<const void *>(t);
-}
-
-}
-
 namespace inet {
 
-// forward
-template<typename T, typename A>
-std::ostream& operator<<(std::ostream& out, const std::vector<T,A>& vec);
+Register_Enum(inet::LeachPktType, (inet::LeachPktType::CH, inet::LeachPktType::ACK, inet::LeachPktType::SCH, inet::LeachPktType::DATA, inet::LeachPktType::BS));
 
-// Template rule to generate operator<< for shared_ptr<T>
-template<typename T>
-inline std::ostream& operator<<(std::ostream& out,const std::shared_ptr<T>& t) { return out << t.get(); }
+Register_Class(ScheduleEntry)
 
-// Template rule which fires if a struct or class doesn't have operator<<
-template<typename T>
-inline std::ostream& operator<<(std::ostream& out,const T&) {return out;}
-
-// operator<< for std::vector<T>
-template<typename T, typename A>
-inline std::ostream& operator<<(std::ostream& out, const std::vector<T,A>& vec)
+ScheduleEntry::ScheduleEntry() : ::omnetpp::cObject()
 {
-    out.put('{');
-    for(typename std::vector<T,A>::const_iterator it = vec.begin(); it != vec.end(); ++it)
-    {
-        if (it != vec.begin()) {
-            out.put(','); out.put(' ');
-        }
-        out << *it;
-    }
-    out.put('}');
-
-    char buf[32];
-    sprintf(buf, " (size=%u)", (unsigned int)vec.size());
-    out.write(buf, strlen(buf));
-    return out;
 }
 
-EXECUTE_ON_STARTUP(
-    omnetpp::cEnum *e = omnetpp::cEnum::find("inet::LeachPktType");
-    if (!e) omnetpp::enums.getInstance()->add(e = new omnetpp::cEnum("inet::LeachPktType"));
-    e->insert(CH, "CH");
-    e->insert(NCH, "NCH");
-    e->insert(BS, "BS");
-)
+ScheduleEntry::ScheduleEntry(const ScheduleEntry& other) : ::omnetpp::cObject(other)
+{
+    copy(other);
+}
+
+ScheduleEntry::~ScheduleEntry()
+{
+}
+
+ScheduleEntry& ScheduleEntry::operator=(const ScheduleEntry& other)
+{
+    if (this == &other) return *this;
+    ::omnetpp::cObject::operator=(other);
+    copy(other);
+    return *this;
+}
+
+void ScheduleEntry::copy(const ScheduleEntry& other)
+{
+    this->nodeAddress = other.nodeAddress;
+    this->TDMAdelay = other.TDMAdelay;
+}
+
+void ScheduleEntry::parsimPack(omnetpp::cCommBuffer *b) const
+{
+    doParsimPacking(b,this->nodeAddress);
+    doParsimPacking(b,this->TDMAdelay);
+}
+
+void ScheduleEntry::parsimUnpack(omnetpp::cCommBuffer *b)
+{
+    doParsimUnpacking(b,this->nodeAddress);
+    doParsimUnpacking(b,this->TDMAdelay);
+}
+
+const Ipv4Address& ScheduleEntry::getNodeAddress() const
+{
+    return this->nodeAddress;
+}
+
+void ScheduleEntry::setNodeAddress(const Ipv4Address& nodeAddress)
+{
+    this->nodeAddress = nodeAddress;
+}
+
+double ScheduleEntry::getTDMAdelay() const
+{
+    return this->TDMAdelay;
+}
+
+void ScheduleEntry::setTDMAdelay(double TDMAdelay)
+{
+    this->TDMAdelay = TDMAdelay;
+}
+
+class ScheduleEntryDescriptor : public omnetpp::cClassDescriptor
+{
+  private:
+    mutable const char **propertyNames;
+    enum FieldConstants {
+        FIELD_nodeAddress,
+        FIELD_TDMAdelay,
+    };
+  public:
+    ScheduleEntryDescriptor();
+    virtual ~ScheduleEntryDescriptor();
+
+    virtual bool doesSupport(omnetpp::cObject *obj) const override;
+    virtual const char **getPropertyNames() const override;
+    virtual const char *getProperty(const char *propertyName) const override;
+    virtual int getFieldCount() const override;
+    virtual const char *getFieldName(int field) const override;
+    virtual int findField(const char *fieldName) const override;
+    virtual unsigned int getFieldTypeFlags(int field) const override;
+    virtual const char *getFieldTypeString(int field) const override;
+    virtual const char **getFieldPropertyNames(int field) const override;
+    virtual const char *getFieldProperty(int field, const char *propertyName) const override;
+    virtual int getFieldArraySize(omnetpp::any_ptr object, int field) const override;
+    virtual void setFieldArraySize(omnetpp::any_ptr object, int field, int size) const override;
+
+    virtual const char *getFieldDynamicTypeString(omnetpp::any_ptr object, int field, int i) const override;
+    virtual std::string getFieldValueAsString(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldValueAsString(omnetpp::any_ptr object, int field, int i, const char *value) const override;
+    virtual omnetpp::cValue getFieldValue(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldValue(omnetpp::any_ptr object, int field, int i, const omnetpp::cValue& value) const override;
+
+    virtual const char *getFieldStructName(int field) const override;
+    virtual omnetpp::any_ptr getFieldStructValuePointer(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldStructValuePointer(omnetpp::any_ptr object, int field, int i, omnetpp::any_ptr ptr) const override;
+};
+
+Register_ClassDescriptor(ScheduleEntryDescriptor)
+
+ScheduleEntryDescriptor::ScheduleEntryDescriptor() : omnetpp::cClassDescriptor(omnetpp::opp_typename(typeid(inet::ScheduleEntry)), "omnetpp::cObject")
+{
+    propertyNames = nullptr;
+}
+
+ScheduleEntryDescriptor::~ScheduleEntryDescriptor()
+{
+    delete[] propertyNames;
+}
+
+bool ScheduleEntryDescriptor::doesSupport(omnetpp::cObject *obj) const
+{
+    return dynamic_cast<ScheduleEntry *>(obj)!=nullptr;
+}
+
+const char **ScheduleEntryDescriptor::getPropertyNames() const
+{
+    if (!propertyNames) {
+        static const char *names[] = {  nullptr };
+        omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+        const char **baseNames = base ? base->getPropertyNames() : nullptr;
+        propertyNames = mergeLists(baseNames, names);
+    }
+    return propertyNames;
+}
+
+const char *ScheduleEntryDescriptor::getProperty(const char *propertyName) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    return base ? base->getProperty(propertyName) : nullptr;
+}
+
+int ScheduleEntryDescriptor::getFieldCount() const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    return base ? 2+base->getFieldCount() : 2;
+}
+
+unsigned int ScheduleEntryDescriptor::getFieldTypeFlags(int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldTypeFlags(field);
+        field -= base->getFieldCount();
+    }
+    static unsigned int fieldTypeFlags[] = {
+        0,    // FIELD_nodeAddress
+        FD_ISEDITABLE,    // FIELD_TDMAdelay
+    };
+    return (field >= 0 && field < 2) ? fieldTypeFlags[field] : 0;
+}
+
+const char *ScheduleEntryDescriptor::getFieldName(int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldName(field);
+        field -= base->getFieldCount();
+    }
+    static const char *fieldNames[] = {
+        "nodeAddress",
+        "TDMAdelay",
+    };
+    return (field >= 0 && field < 2) ? fieldNames[field] : nullptr;
+}
+
+int ScheduleEntryDescriptor::findField(const char *fieldName) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    int baseIndex = base ? base->getFieldCount() : 0;
+    if (strcmp(fieldName, "nodeAddress") == 0) return baseIndex + 0;
+    if (strcmp(fieldName, "TDMAdelay") == 0) return baseIndex + 1;
+    return base ? base->findField(fieldName) : -1;
+}
+
+const char *ScheduleEntryDescriptor::getFieldTypeString(int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldTypeString(field);
+        field -= base->getFieldCount();
+    }
+    static const char *fieldTypeStrings[] = {
+        "inet::Ipv4Address",    // FIELD_nodeAddress
+        "double",    // FIELD_TDMAdelay
+    };
+    return (field >= 0 && field < 2) ? fieldTypeStrings[field] : nullptr;
+}
+
+const char **ScheduleEntryDescriptor::getFieldPropertyNames(int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldPropertyNames(field);
+        field -= base->getFieldCount();
+    }
+    switch (field) {
+        default: return nullptr;
+    }
+}
+
+const char *ScheduleEntryDescriptor::getFieldProperty(int field, const char *propertyName) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldProperty(field, propertyName);
+        field -= base->getFieldCount();
+    }
+    switch (field) {
+        default: return nullptr;
+    }
+}
+
+int ScheduleEntryDescriptor::getFieldArraySize(omnetpp::any_ptr object, int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldArraySize(object, field);
+        field -= base->getFieldCount();
+    }
+    ScheduleEntry *pp = omnetpp::fromAnyPtr<ScheduleEntry>(object); (void)pp;
+    switch (field) {
+        default: return 0;
+    }
+}
+
+void ScheduleEntryDescriptor::setFieldArraySize(omnetpp::any_ptr object, int field, int size) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldArraySize(object, field, size);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    ScheduleEntry *pp = omnetpp::fromAnyPtr<ScheduleEntry>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot set array size of field %d of class 'ScheduleEntry'", field);
+    }
+}
+
+const char *ScheduleEntryDescriptor::getFieldDynamicTypeString(omnetpp::any_ptr object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldDynamicTypeString(object,field,i);
+        field -= base->getFieldCount();
+    }
+    ScheduleEntry *pp = omnetpp::fromAnyPtr<ScheduleEntry>(object); (void)pp;
+    switch (field) {
+        default: return nullptr;
+    }
+}
+
+std::string ScheduleEntryDescriptor::getFieldValueAsString(omnetpp::any_ptr object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldValueAsString(object,field,i);
+        field -= base->getFieldCount();
+    }
+    ScheduleEntry *pp = omnetpp::fromAnyPtr<ScheduleEntry>(object); (void)pp;
+    switch (field) {
+        case FIELD_nodeAddress: return pp->getNodeAddress().str();
+        case FIELD_TDMAdelay: return double2string(pp->getTDMAdelay());
+        default: return "";
+    }
+}
+
+void ScheduleEntryDescriptor::setFieldValueAsString(omnetpp::any_ptr object, int field, int i, const char *value) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldValueAsString(object, field, i, value);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    ScheduleEntry *pp = omnetpp::fromAnyPtr<ScheduleEntry>(object); (void)pp;
+    switch (field) {
+        case FIELD_TDMAdelay: pp->setTDMAdelay(string2double(value)); break;
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'ScheduleEntry'", field);
+    }
+}
+
+omnetpp::cValue ScheduleEntryDescriptor::getFieldValue(omnetpp::any_ptr object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldValue(object,field,i);
+        field -= base->getFieldCount();
+    }
+    ScheduleEntry *pp = omnetpp::fromAnyPtr<ScheduleEntry>(object); (void)pp;
+    switch (field) {
+        case FIELD_nodeAddress: return omnetpp::toAnyPtr(&pp->getNodeAddress()); break;
+        case FIELD_TDMAdelay: return pp->getTDMAdelay();
+        default: throw omnetpp::cRuntimeError("Cannot return field %d of class 'ScheduleEntry' as cValue -- field index out of range?", field);
+    }
+}
+
+void ScheduleEntryDescriptor::setFieldValue(omnetpp::any_ptr object, int field, int i, const omnetpp::cValue& value) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldValue(object, field, i, value);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    ScheduleEntry *pp = omnetpp::fromAnyPtr<ScheduleEntry>(object); (void)pp;
+    switch (field) {
+        case FIELD_TDMAdelay: pp->setTDMAdelay(value.doubleValue()); break;
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'ScheduleEntry'", field);
+    }
+}
+
+const char *ScheduleEntryDescriptor::getFieldStructName(int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldStructName(field);
+        field -= base->getFieldCount();
+    }
+    switch (field) {
+        default: return nullptr;
+    };
+}
+
+omnetpp::any_ptr ScheduleEntryDescriptor::getFieldStructValuePointer(omnetpp::any_ptr object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldStructValuePointer(object, field, i);
+        field -= base->getFieldCount();
+    }
+    ScheduleEntry *pp = omnetpp::fromAnyPtr<ScheduleEntry>(object); (void)pp;
+    switch (field) {
+        case FIELD_nodeAddress: return omnetpp::toAnyPtr(&pp->getNodeAddress()); break;
+        default: return omnetpp::any_ptr(nullptr);
+    }
+}
+
+void ScheduleEntryDescriptor::setFieldStructValuePointer(omnetpp::any_ptr object, int field, int i, omnetpp::any_ptr ptr) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldStructValuePointer(object, field, i, ptr);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    ScheduleEntry *pp = omnetpp::fromAnyPtr<ScheduleEntry>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'ScheduleEntry'", field);
+    }
+}
 
 Register_Class(LeachControlPkt)
 
@@ -228,6 +538,7 @@ LeachControlPkt::LeachControlPkt(const LeachControlPkt& other) : ::inet::FieldsC
 
 LeachControlPkt::~LeachControlPkt()
 {
+    delete [] this->schedule;
 }
 
 LeachControlPkt& LeachControlPkt::operator=(const LeachControlPkt& other)
@@ -240,22 +551,52 @@ LeachControlPkt& LeachControlPkt::operator=(const LeachControlPkt& other)
 
 void LeachControlPkt::copy(const LeachControlPkt& other)
 {
-    this->srcAddress = other.srcAddress;
     this->packetType = other.packetType;
+    this->srcAddress = other.srcAddress;
+    this->fingerprint = other.fingerprint;
+    delete [] this->schedule;
+    this->schedule = (other.schedule_arraysize==0) ? nullptr : new ScheduleEntry[other.schedule_arraysize];
+    schedule_arraysize = other.schedule_arraysize;
+    for (size_t i = 0; i < schedule_arraysize; i++) {
+        this->schedule[i] = other.schedule[i];
+    }
 }
 
 void LeachControlPkt::parsimPack(omnetpp::cCommBuffer *b) const
 {
     ::inet::FieldsChunk::parsimPack(b);
-    doParsimPacking(b,this->srcAddress);
     doParsimPacking(b,this->packetType);
+    doParsimPacking(b,this->srcAddress);
+    doParsimPacking(b,this->fingerprint);
+    b->pack(schedule_arraysize);
+    doParsimArrayPacking(b,this->schedule,schedule_arraysize);
 }
 
 void LeachControlPkt::parsimUnpack(omnetpp::cCommBuffer *b)
 {
     ::inet::FieldsChunk::parsimUnpack(b);
-    doParsimUnpacking(b,this->srcAddress);
     doParsimUnpacking(b,this->packetType);
+    doParsimUnpacking(b,this->srcAddress);
+    doParsimUnpacking(b,this->fingerprint);
+    delete [] this->schedule;
+    b->unpack(schedule_arraysize);
+    if (schedule_arraysize == 0) {
+        this->schedule = nullptr;
+    } else {
+        this->schedule = new ScheduleEntry[schedule_arraysize];
+        doParsimArrayUnpacking(b,this->schedule,schedule_arraysize);
+    }
+}
+
+LeachPktType LeachControlPkt::getPacketType() const
+{
+    return this->packetType;
+}
+
+void LeachControlPkt::setPacketType(LeachPktType packetType)
+{
+    handleChange();
+    this->packetType = packetType;
 }
 
 const Ipv4Address& LeachControlPkt::getSrcAddress() const
@@ -269,24 +610,94 @@ void LeachControlPkt::setSrcAddress(const Ipv4Address& srcAddress)
     this->srcAddress = srcAddress;
 }
 
-inet::LeachPktType LeachControlPkt::getPacketType() const
+const char * LeachControlPkt::getFingerprint() const
 {
-    return this->packetType;
+    return this->fingerprint.c_str();
 }
 
-void LeachControlPkt::setPacketType(inet::LeachPktType packetType)
+void LeachControlPkt::setFingerprint(const char * fingerprint)
 {
     handleChange();
-    this->packetType = packetType;
+    this->fingerprint = fingerprint;
+}
+
+size_t LeachControlPkt::getScheduleArraySize() const
+{
+    return schedule_arraysize;
+}
+
+const ScheduleEntry& LeachControlPkt::getSchedule(size_t k) const
+{
+    if (k >= schedule_arraysize) throw omnetpp::cRuntimeError("Array of size %lu indexed by %lu", (unsigned long)schedule_arraysize, (unsigned long)k);
+    return this->schedule[k];
+}
+
+void LeachControlPkt::setScheduleArraySize(size_t newSize)
+{
+    handleChange();
+    ScheduleEntry *schedule2 = (newSize==0) ? nullptr : new ScheduleEntry[newSize];
+    size_t minSize = schedule_arraysize < newSize ? schedule_arraysize : newSize;
+    for (size_t i = 0; i < minSize; i++)
+        schedule2[i] = this->schedule[i];
+    delete [] this->schedule;
+    this->schedule = schedule2;
+    schedule_arraysize = newSize;
+}
+
+void LeachControlPkt::setSchedule(size_t k, const ScheduleEntry& schedule)
+{
+    if (k >= schedule_arraysize) throw omnetpp::cRuntimeError("Array of size %lu indexed by %lu", (unsigned long)schedule_arraysize, (unsigned long)k);
+    handleChange();
+    this->schedule[k] = schedule;
+}
+
+void LeachControlPkt::insertSchedule(size_t k, const ScheduleEntry& schedule)
+{
+    if (k > schedule_arraysize) throw omnetpp::cRuntimeError("Array of size %lu indexed by %lu", (unsigned long)schedule_arraysize, (unsigned long)k);
+    handleChange();
+    size_t newSize = schedule_arraysize + 1;
+    ScheduleEntry *schedule2 = new ScheduleEntry[newSize];
+    size_t i;
+    for (i = 0; i < k; i++)
+        schedule2[i] = this->schedule[i];
+    schedule2[k] = schedule;
+    for (i = k + 1; i < newSize; i++)
+        schedule2[i] = this->schedule[i-1];
+    delete [] this->schedule;
+    this->schedule = schedule2;
+    schedule_arraysize = newSize;
+}
+
+void LeachControlPkt::appendSchedule(const ScheduleEntry& schedule)
+{
+    insertSchedule(schedule_arraysize, schedule);
+}
+
+void LeachControlPkt::eraseSchedule(size_t k)
+{
+    if (k >= schedule_arraysize) throw omnetpp::cRuntimeError("Array of size %lu indexed by %lu", (unsigned long)schedule_arraysize, (unsigned long)k);
+    handleChange();
+    size_t newSize = schedule_arraysize - 1;
+    ScheduleEntry *schedule2 = (newSize == 0) ? nullptr : new ScheduleEntry[newSize];
+    size_t i;
+    for (i = 0; i < k; i++)
+        schedule2[i] = this->schedule[i];
+    for (i = k; i < newSize; i++)
+        schedule2[i] = this->schedule[i+1];
+    delete [] this->schedule;
+    this->schedule = schedule2;
+    schedule_arraysize = newSize;
 }
 
 class LeachControlPktDescriptor : public omnetpp::cClassDescriptor
 {
   private:
-    mutable const char **propertynames;
+    mutable const char **propertyNames;
     enum FieldConstants {
-        FIELD_srcAddress,
         FIELD_packetType,
+        FIELD_srcAddress,
+        FIELD_fingerprint,
+        FIELD_schedule,
     };
   public:
     LeachControlPktDescriptor();
@@ -294,34 +705,38 @@ class LeachControlPktDescriptor : public omnetpp::cClassDescriptor
 
     virtual bool doesSupport(omnetpp::cObject *obj) const override;
     virtual const char **getPropertyNames() const override;
-    virtual const char *getProperty(const char *propertyname) const override;
+    virtual const char *getProperty(const char *propertyName) const override;
     virtual int getFieldCount() const override;
     virtual const char *getFieldName(int field) const override;
     virtual int findField(const char *fieldName) const override;
     virtual unsigned int getFieldTypeFlags(int field) const override;
     virtual const char *getFieldTypeString(int field) const override;
     virtual const char **getFieldPropertyNames(int field) const override;
-    virtual const char *getFieldProperty(int field, const char *propertyname) const override;
-    virtual int getFieldArraySize(void *object, int field) const override;
+    virtual const char *getFieldProperty(int field, const char *propertyName) const override;
+    virtual int getFieldArraySize(omnetpp::any_ptr object, int field) const override;
+    virtual void setFieldArraySize(omnetpp::any_ptr object, int field, int size) const override;
 
-    virtual const char *getFieldDynamicTypeString(void *object, int field, int i) const override;
-    virtual std::string getFieldValueAsString(void *object, int field, int i) const override;
-    virtual bool setFieldValueAsString(void *object, int field, int i, const char *value) const override;
+    virtual const char *getFieldDynamicTypeString(omnetpp::any_ptr object, int field, int i) const override;
+    virtual std::string getFieldValueAsString(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldValueAsString(omnetpp::any_ptr object, int field, int i, const char *value) const override;
+    virtual omnetpp::cValue getFieldValue(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldValue(omnetpp::any_ptr object, int field, int i, const omnetpp::cValue& value) const override;
 
     virtual const char *getFieldStructName(int field) const override;
-    virtual void *getFieldStructValuePointer(void *object, int field, int i) const override;
+    virtual omnetpp::any_ptr getFieldStructValuePointer(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldStructValuePointer(omnetpp::any_ptr object, int field, int i, omnetpp::any_ptr ptr) const override;
 };
 
 Register_ClassDescriptor(LeachControlPktDescriptor)
 
 LeachControlPktDescriptor::LeachControlPktDescriptor() : omnetpp::cClassDescriptor(omnetpp::opp_typename(typeid(inet::LeachControlPkt)), "inet::FieldsChunk")
 {
-    propertynames = nullptr;
+    propertyNames = nullptr;
 }
 
 LeachControlPktDescriptor::~LeachControlPktDescriptor()
 {
-    delete[] propertynames;
+    delete[] propertyNames;
 }
 
 bool LeachControlPktDescriptor::doesSupport(omnetpp::cObject *obj) const
@@ -331,88 +746,96 @@ bool LeachControlPktDescriptor::doesSupport(omnetpp::cObject *obj) const
 
 const char **LeachControlPktDescriptor::getPropertyNames() const
 {
-    if (!propertynames) {
+    if (!propertyNames) {
         static const char *names[] = {  nullptr };
-        omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-        const char **basenames = basedesc ? basedesc->getPropertyNames() : nullptr;
-        propertynames = mergeLists(basenames, names);
+        omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+        const char **baseNames = base ? base->getPropertyNames() : nullptr;
+        propertyNames = mergeLists(baseNames, names);
     }
-    return propertynames;
+    return propertyNames;
 }
 
-const char *LeachControlPktDescriptor::getProperty(const char *propertyname) const
+const char *LeachControlPktDescriptor::getProperty(const char *propertyName) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? basedesc->getProperty(propertyname) : nullptr;
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    return base ? base->getProperty(propertyName) : nullptr;
 }
 
 int LeachControlPktDescriptor::getFieldCount() const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? 2+basedesc->getFieldCount() : 2;
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    return base ? 4+base->getFieldCount() : 4;
 }
 
 unsigned int LeachControlPktDescriptor::getFieldTypeFlags(int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldTypeFlags(field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldTypeFlags(field);
+        field -= base->getFieldCount();
     }
     static unsigned int fieldTypeFlags[] = {
+        0,    // FIELD_packetType
         0,    // FIELD_srcAddress
-        FD_ISEDITABLE,    // FIELD_packetType
+        FD_ISEDITABLE,    // FIELD_fingerprint
+        FD_ISARRAY | FD_ISCOMPOUND | FD_ISCOBJECT | FD_ISRESIZABLE,    // FIELD_schedule
     };
-    return (field >= 0 && field < 2) ? fieldTypeFlags[field] : 0;
+    return (field >= 0 && field < 4) ? fieldTypeFlags[field] : 0;
 }
 
 const char *LeachControlPktDescriptor::getFieldName(int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldName(field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldName(field);
+        field -= base->getFieldCount();
     }
     static const char *fieldNames[] = {
-        "srcAddress",
         "packetType",
+        "srcAddress",
+        "fingerprint",
+        "schedule",
     };
-    return (field >= 0 && field < 2) ? fieldNames[field] : nullptr;
+    return (field >= 0 && field < 4) ? fieldNames[field] : nullptr;
 }
 
 int LeachControlPktDescriptor::findField(const char *fieldName) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    int base = basedesc ? basedesc->getFieldCount() : 0;
-    if (fieldName[0] == 's' && strcmp(fieldName, "srcAddress") == 0) return base+0;
-    if (fieldName[0] == 'p' && strcmp(fieldName, "packetType") == 0) return base+1;
-    return basedesc ? basedesc->findField(fieldName) : -1;
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    int baseIndex = base ? base->getFieldCount() : 0;
+    if (strcmp(fieldName, "packetType") == 0) return baseIndex + 0;
+    if (strcmp(fieldName, "srcAddress") == 0) return baseIndex + 1;
+    if (strcmp(fieldName, "fingerprint") == 0) return baseIndex + 2;
+    if (strcmp(fieldName, "schedule") == 0) return baseIndex + 3;
+    return base ? base->findField(fieldName) : -1;
 }
 
 const char *LeachControlPktDescriptor::getFieldTypeString(int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldTypeString(field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldTypeString(field);
+        field -= base->getFieldCount();
     }
     static const char *fieldTypeStrings[] = {
-        "inet::Ipv4Address",    // FIELD_srcAddress
         "inet::LeachPktType",    // FIELD_packetType
+        "inet::Ipv4Address",    // FIELD_srcAddress
+        "string",    // FIELD_fingerprint
+        "inet::ScheduleEntry",    // FIELD_schedule
     };
-    return (field >= 0 && field < 2) ? fieldTypeStrings[field] : nullptr;
+    return (field >= 0 && field < 4) ? fieldTypeStrings[field] : nullptr;
 }
 
 const char **LeachControlPktDescriptor::getFieldPropertyNames(int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldPropertyNames(field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldPropertyNames(field);
+        field -= base->getFieldCount();
     }
     switch (field) {
         case FIELD_packetType: {
@@ -423,106 +846,181 @@ const char **LeachControlPktDescriptor::getFieldPropertyNames(int field) const
     }
 }
 
-const char *LeachControlPktDescriptor::getFieldProperty(int field, const char *propertyname) const
+const char *LeachControlPktDescriptor::getFieldProperty(int field, const char *propertyName) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldProperty(field, propertyname);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldProperty(field, propertyName);
+        field -= base->getFieldCount();
     }
     switch (field) {
         case FIELD_packetType:
-            if (!strcmp(propertyname, "enum")) return "inet::LeachPktType";
+            if (!strcmp(propertyName, "enum")) return "inet::LeachPktType";
             return nullptr;
         default: return nullptr;
     }
 }
 
-int LeachControlPktDescriptor::getFieldArraySize(void *object, int field) const
+int LeachControlPktDescriptor::getFieldArraySize(omnetpp::any_ptr object, int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldArraySize(object, field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldArraySize(object, field);
+        field -= base->getFieldCount();
     }
-    LeachControlPkt *pp = (LeachControlPkt *)object; (void)pp;
+    LeachControlPkt *pp = omnetpp::fromAnyPtr<LeachControlPkt>(object); (void)pp;
     switch (field) {
+        case FIELD_schedule: return pp->getScheduleArraySize();
         default: return 0;
     }
 }
 
-const char *LeachControlPktDescriptor::getFieldDynamicTypeString(void *object, int field, int i) const
+void LeachControlPktDescriptor::setFieldArraySize(omnetpp::any_ptr object, int field, int size) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldDynamicTypeString(object,field,i);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldArraySize(object, field, size);
+            return;
+        }
+        field -= base->getFieldCount();
     }
-    LeachControlPkt *pp = (LeachControlPkt *)object; (void)pp;
+    LeachControlPkt *pp = omnetpp::fromAnyPtr<LeachControlPkt>(object); (void)pp;
+    switch (field) {
+        case FIELD_schedule: pp->setScheduleArraySize(size); break;
+        default: throw omnetpp::cRuntimeError("Cannot set array size of field %d of class 'LeachControlPkt'", field);
+    }
+}
+
+const char *LeachControlPktDescriptor::getFieldDynamicTypeString(omnetpp::any_ptr object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldDynamicTypeString(object,field,i);
+        field -= base->getFieldCount();
+    }
+    LeachControlPkt *pp = omnetpp::fromAnyPtr<LeachControlPkt>(object); (void)pp;
     switch (field) {
         default: return nullptr;
     }
 }
 
-std::string LeachControlPktDescriptor::getFieldValueAsString(void *object, int field, int i) const
+std::string LeachControlPktDescriptor::getFieldValueAsString(omnetpp::any_ptr object, int field, int i) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldValueAsString(object,field,i);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldValueAsString(object,field,i);
+        field -= base->getFieldCount();
     }
-    LeachControlPkt *pp = (LeachControlPkt *)object; (void)pp;
+    LeachControlPkt *pp = omnetpp::fromAnyPtr<LeachControlPkt>(object); (void)pp;
     switch (field) {
-        case FIELD_srcAddress: return pp->getSrcAddress().str();
         case FIELD_packetType: return enum2string(pp->getPacketType(), "inet::LeachPktType");
+        case FIELD_srcAddress: return pp->getSrcAddress().str();
+        case FIELD_fingerprint: return oppstring2string(pp->getFingerprint());
+        case FIELD_schedule: return pp->getSchedule(i).str();
         default: return "";
     }
 }
 
-bool LeachControlPktDescriptor::setFieldValueAsString(void *object, int field, int i, const char *value) const
+void LeachControlPktDescriptor::setFieldValueAsString(omnetpp::any_ptr object, int field, int i, const char *value) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->setFieldValueAsString(object,field,i,value);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldValueAsString(object, field, i, value);
+            return;
+        }
+        field -= base->getFieldCount();
     }
-    LeachControlPkt *pp = (LeachControlPkt *)object; (void)pp;
+    LeachControlPkt *pp = omnetpp::fromAnyPtr<LeachControlPkt>(object); (void)pp;
     switch (field) {
-        case FIELD_packetType: pp->setPacketType((inet::LeachPktType)string2enum(value, "inet::LeachPktType")); return true;
-        default: return false;
+        case FIELD_fingerprint: pp->setFingerprint((value)); break;
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'LeachControlPkt'", field);
+    }
+}
+
+omnetpp::cValue LeachControlPktDescriptor::getFieldValue(omnetpp::any_ptr object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldValue(object,field,i);
+        field -= base->getFieldCount();
+    }
+    LeachControlPkt *pp = omnetpp::fromAnyPtr<LeachControlPkt>(object); (void)pp;
+    switch (field) {
+        case FIELD_packetType: return static_cast<int>(pp->getPacketType());
+        case FIELD_srcAddress: return omnetpp::toAnyPtr(&pp->getSrcAddress()); break;
+        case FIELD_fingerprint: return pp->getFingerprint();
+        case FIELD_schedule: return omnetpp::toAnyPtr(&pp->getSchedule(i)); break;
+        default: throw omnetpp::cRuntimeError("Cannot return field %d of class 'LeachControlPkt' as cValue -- field index out of range?", field);
+    }
+}
+
+void LeachControlPktDescriptor::setFieldValue(omnetpp::any_ptr object, int field, int i, const omnetpp::cValue& value) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldValue(object, field, i, value);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    LeachControlPkt *pp = omnetpp::fromAnyPtr<LeachControlPkt>(object); (void)pp;
+    switch (field) {
+        case FIELD_fingerprint: pp->setFingerprint(value.stringValue()); break;
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'LeachControlPkt'", field);
     }
 }
 
 const char *LeachControlPktDescriptor::getFieldStructName(int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldStructName(field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldStructName(field);
+        field -= base->getFieldCount();
     }
     switch (field) {
+        case FIELD_schedule: return omnetpp::opp_typename(typeid(ScheduleEntry));
         default: return nullptr;
     };
 }
 
-void *LeachControlPktDescriptor::getFieldStructValuePointer(void *object, int field, int i) const
+omnetpp::any_ptr LeachControlPktDescriptor::getFieldStructValuePointer(omnetpp::any_ptr object, int field, int i) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldStructValuePointer(object, field, i);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldStructValuePointer(object, field, i);
+        field -= base->getFieldCount();
     }
-    LeachControlPkt *pp = (LeachControlPkt *)object; (void)pp;
+    LeachControlPkt *pp = omnetpp::fromAnyPtr<LeachControlPkt>(object); (void)pp;
     switch (field) {
-        case FIELD_srcAddress: return toVoidPtr(&pp->getSrcAddress()); break;
-        default: return nullptr;
+        case FIELD_srcAddress: return omnetpp::toAnyPtr(&pp->getSrcAddress()); break;
+        case FIELD_schedule: return omnetpp::toAnyPtr(&pp->getSchedule(i)); break;
+        default: return omnetpp::any_ptr(nullptr);
+    }
+}
+
+void LeachControlPktDescriptor::setFieldStructValuePointer(omnetpp::any_ptr object, int field, int i, omnetpp::any_ptr ptr) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldStructValuePointer(object, field, i, ptr);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    LeachControlPkt *pp = omnetpp::fromAnyPtr<LeachControlPkt>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'LeachControlPkt'", field);
     }
 }
 
@@ -594,7 +1092,7 @@ void LeachDataPkt::setHumidity(double humidity)
 class LeachDataPktDescriptor : public omnetpp::cClassDescriptor
 {
   private:
-    mutable const char **propertynames;
+    mutable const char **propertyNames;
     enum FieldConstants {
         FIELD_temperature,
         FIELD_humidity,
@@ -605,34 +1103,38 @@ class LeachDataPktDescriptor : public omnetpp::cClassDescriptor
 
     virtual bool doesSupport(omnetpp::cObject *obj) const override;
     virtual const char **getPropertyNames() const override;
-    virtual const char *getProperty(const char *propertyname) const override;
+    virtual const char *getProperty(const char *propertyName) const override;
     virtual int getFieldCount() const override;
     virtual const char *getFieldName(int field) const override;
     virtual int findField(const char *fieldName) const override;
     virtual unsigned int getFieldTypeFlags(int field) const override;
     virtual const char *getFieldTypeString(int field) const override;
     virtual const char **getFieldPropertyNames(int field) const override;
-    virtual const char *getFieldProperty(int field, const char *propertyname) const override;
-    virtual int getFieldArraySize(void *object, int field) const override;
+    virtual const char *getFieldProperty(int field, const char *propertyName) const override;
+    virtual int getFieldArraySize(omnetpp::any_ptr object, int field) const override;
+    virtual void setFieldArraySize(omnetpp::any_ptr object, int field, int size) const override;
 
-    virtual const char *getFieldDynamicTypeString(void *object, int field, int i) const override;
-    virtual std::string getFieldValueAsString(void *object, int field, int i) const override;
-    virtual bool setFieldValueAsString(void *object, int field, int i, const char *value) const override;
+    virtual const char *getFieldDynamicTypeString(omnetpp::any_ptr object, int field, int i) const override;
+    virtual std::string getFieldValueAsString(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldValueAsString(omnetpp::any_ptr object, int field, int i, const char *value) const override;
+    virtual omnetpp::cValue getFieldValue(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldValue(omnetpp::any_ptr object, int field, int i, const omnetpp::cValue& value) const override;
 
     virtual const char *getFieldStructName(int field) const override;
-    virtual void *getFieldStructValuePointer(void *object, int field, int i) const override;
+    virtual omnetpp::any_ptr getFieldStructValuePointer(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldStructValuePointer(omnetpp::any_ptr object, int field, int i, omnetpp::any_ptr ptr) const override;
 };
 
 Register_ClassDescriptor(LeachDataPktDescriptor)
 
 LeachDataPktDescriptor::LeachDataPktDescriptor() : omnetpp::cClassDescriptor(omnetpp::opp_typename(typeid(inet::LeachDataPkt)), "inet::LeachControlPkt")
 {
-    propertynames = nullptr;
+    propertyNames = nullptr;
 }
 
 LeachDataPktDescriptor::~LeachDataPktDescriptor()
 {
-    delete[] propertynames;
+    delete[] propertyNames;
 }
 
 bool LeachDataPktDescriptor::doesSupport(omnetpp::cObject *obj) const
@@ -642,34 +1144,34 @@ bool LeachDataPktDescriptor::doesSupport(omnetpp::cObject *obj) const
 
 const char **LeachDataPktDescriptor::getPropertyNames() const
 {
-    if (!propertynames) {
+    if (!propertyNames) {
         static const char *names[] = {  nullptr };
-        omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-        const char **basenames = basedesc ? basedesc->getPropertyNames() : nullptr;
-        propertynames = mergeLists(basenames, names);
+        omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+        const char **baseNames = base ? base->getPropertyNames() : nullptr;
+        propertyNames = mergeLists(baseNames, names);
     }
-    return propertynames;
+    return propertyNames;
 }
 
-const char *LeachDataPktDescriptor::getProperty(const char *propertyname) const
+const char *LeachDataPktDescriptor::getProperty(const char *propertyName) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? basedesc->getProperty(propertyname) : nullptr;
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    return base ? base->getProperty(propertyName) : nullptr;
 }
 
 int LeachDataPktDescriptor::getFieldCount() const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? 2+basedesc->getFieldCount() : 2;
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    return base ? 2+base->getFieldCount() : 2;
 }
 
 unsigned int LeachDataPktDescriptor::getFieldTypeFlags(int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldTypeFlags(field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldTypeFlags(field);
+        field -= base->getFieldCount();
     }
     static unsigned int fieldTypeFlags[] = {
         FD_ISEDITABLE,    // FIELD_temperature
@@ -680,11 +1182,11 @@ unsigned int LeachDataPktDescriptor::getFieldTypeFlags(int field) const
 
 const char *LeachDataPktDescriptor::getFieldName(int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldName(field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldName(field);
+        field -= base->getFieldCount();
     }
     static const char *fieldNames[] = {
         "temperature",
@@ -695,20 +1197,20 @@ const char *LeachDataPktDescriptor::getFieldName(int field) const
 
 int LeachDataPktDescriptor::findField(const char *fieldName) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    int base = basedesc ? basedesc->getFieldCount() : 0;
-    if (fieldName[0] == 't' && strcmp(fieldName, "temperature") == 0) return base+0;
-    if (fieldName[0] == 'h' && strcmp(fieldName, "humidity") == 0) return base+1;
-    return basedesc ? basedesc->findField(fieldName) : -1;
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    int baseIndex = base ? base->getFieldCount() : 0;
+    if (strcmp(fieldName, "temperature") == 0) return baseIndex + 0;
+    if (strcmp(fieldName, "humidity") == 0) return baseIndex + 1;
+    return base ? base->findField(fieldName) : -1;
 }
 
 const char *LeachDataPktDescriptor::getFieldTypeString(int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldTypeString(field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldTypeString(field);
+        field -= base->getFieldCount();
     }
     static const char *fieldTypeStrings[] = {
         "double",    // FIELD_temperature
@@ -719,67 +1221,83 @@ const char *LeachDataPktDescriptor::getFieldTypeString(int field) const
 
 const char **LeachDataPktDescriptor::getFieldPropertyNames(int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldPropertyNames(field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldPropertyNames(field);
+        field -= base->getFieldCount();
     }
     switch (field) {
         default: return nullptr;
     }
 }
 
-const char *LeachDataPktDescriptor::getFieldProperty(int field, const char *propertyname) const
+const char *LeachDataPktDescriptor::getFieldProperty(int field, const char *propertyName) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldProperty(field, propertyname);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldProperty(field, propertyName);
+        field -= base->getFieldCount();
     }
     switch (field) {
         default: return nullptr;
     }
 }
 
-int LeachDataPktDescriptor::getFieldArraySize(void *object, int field) const
+int LeachDataPktDescriptor::getFieldArraySize(omnetpp::any_ptr object, int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldArraySize(object, field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldArraySize(object, field);
+        field -= base->getFieldCount();
     }
-    LeachDataPkt *pp = (LeachDataPkt *)object; (void)pp;
+    LeachDataPkt *pp = omnetpp::fromAnyPtr<LeachDataPkt>(object); (void)pp;
     switch (field) {
         default: return 0;
     }
 }
 
-const char *LeachDataPktDescriptor::getFieldDynamicTypeString(void *object, int field, int i) const
+void LeachDataPktDescriptor::setFieldArraySize(omnetpp::any_ptr object, int field, int size) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldDynamicTypeString(object,field,i);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldArraySize(object, field, size);
+            return;
+        }
+        field -= base->getFieldCount();
     }
-    LeachDataPkt *pp = (LeachDataPkt *)object; (void)pp;
+    LeachDataPkt *pp = omnetpp::fromAnyPtr<LeachDataPkt>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot set array size of field %d of class 'LeachDataPkt'", field);
+    }
+}
+
+const char *LeachDataPktDescriptor::getFieldDynamicTypeString(omnetpp::any_ptr object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldDynamicTypeString(object,field,i);
+        field -= base->getFieldCount();
+    }
+    LeachDataPkt *pp = omnetpp::fromAnyPtr<LeachDataPkt>(object); (void)pp;
     switch (field) {
         default: return nullptr;
     }
 }
 
-std::string LeachDataPktDescriptor::getFieldValueAsString(void *object, int field, int i) const
+std::string LeachDataPktDescriptor::getFieldValueAsString(omnetpp::any_ptr object, int field, int i) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldValueAsString(object,field,i);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldValueAsString(object,field,i);
+        field -= base->getFieldCount();
     }
-    LeachDataPkt *pp = (LeachDataPkt *)object; (void)pp;
+    LeachDataPkt *pp = omnetpp::fromAnyPtr<LeachDataPkt>(object); (void)pp;
     switch (field) {
         case FIELD_temperature: return double2string(pp->getTemperature());
         case FIELD_humidity: return double2string(pp->getHumidity());
@@ -787,46 +1305,98 @@ std::string LeachDataPktDescriptor::getFieldValueAsString(void *object, int fiel
     }
 }
 
-bool LeachDataPktDescriptor::setFieldValueAsString(void *object, int field, int i, const char *value) const
+void LeachDataPktDescriptor::setFieldValueAsString(omnetpp::any_ptr object, int field, int i, const char *value) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->setFieldValueAsString(object,field,i,value);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldValueAsString(object, field, i, value);
+            return;
+        }
+        field -= base->getFieldCount();
     }
-    LeachDataPkt *pp = (LeachDataPkt *)object; (void)pp;
+    LeachDataPkt *pp = omnetpp::fromAnyPtr<LeachDataPkt>(object); (void)pp;
     switch (field) {
-        case FIELD_temperature: pp->setTemperature(string2double(value)); return true;
-        case FIELD_humidity: pp->setHumidity(string2double(value)); return true;
-        default: return false;
+        case FIELD_temperature: pp->setTemperature(string2double(value)); break;
+        case FIELD_humidity: pp->setHumidity(string2double(value)); break;
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'LeachDataPkt'", field);
+    }
+}
+
+omnetpp::cValue LeachDataPktDescriptor::getFieldValue(omnetpp::any_ptr object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldValue(object,field,i);
+        field -= base->getFieldCount();
+    }
+    LeachDataPkt *pp = omnetpp::fromAnyPtr<LeachDataPkt>(object); (void)pp;
+    switch (field) {
+        case FIELD_temperature: return pp->getTemperature();
+        case FIELD_humidity: return pp->getHumidity();
+        default: throw omnetpp::cRuntimeError("Cannot return field %d of class 'LeachDataPkt' as cValue -- field index out of range?", field);
+    }
+}
+
+void LeachDataPktDescriptor::setFieldValue(omnetpp::any_ptr object, int field, int i, const omnetpp::cValue& value) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldValue(object, field, i, value);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    LeachDataPkt *pp = omnetpp::fromAnyPtr<LeachDataPkt>(object); (void)pp;
+    switch (field) {
+        case FIELD_temperature: pp->setTemperature(value.doubleValue()); break;
+        case FIELD_humidity: pp->setHumidity(value.doubleValue()); break;
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'LeachDataPkt'", field);
     }
 }
 
 const char *LeachDataPktDescriptor::getFieldStructName(int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldStructName(field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldStructName(field);
+        field -= base->getFieldCount();
     }
     switch (field) {
         default: return nullptr;
     };
 }
 
-void *LeachDataPktDescriptor::getFieldStructValuePointer(void *object, int field, int i) const
+omnetpp::any_ptr LeachDataPktDescriptor::getFieldStructValuePointer(omnetpp::any_ptr object, int field, int i) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldStructValuePointer(object, field, i);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldStructValuePointer(object, field, i);
+        field -= base->getFieldCount();
     }
-    LeachDataPkt *pp = (LeachDataPkt *)object; (void)pp;
+    LeachDataPkt *pp = omnetpp::fromAnyPtr<LeachDataPkt>(object); (void)pp;
     switch (field) {
-        default: return nullptr;
+        default: return omnetpp::any_ptr(nullptr);
+    }
+}
+
+void LeachDataPktDescriptor::setFieldStructValuePointer(omnetpp::any_ptr object, int field, int i, omnetpp::any_ptr ptr) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldStructValuePointer(object, field, i, ptr);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    LeachDataPkt *pp = omnetpp::fromAnyPtr<LeachDataPkt>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'LeachDataPkt'", field);
     }
 }
 
@@ -884,7 +1454,7 @@ void LeachBSPkt::setCHAddr(const Ipv4Address& CHAddr)
 class LeachBSPktDescriptor : public omnetpp::cClassDescriptor
 {
   private:
-    mutable const char **propertynames;
+    mutable const char **propertyNames;
     enum FieldConstants {
         FIELD_CHAddr,
     };
@@ -894,34 +1464,38 @@ class LeachBSPktDescriptor : public omnetpp::cClassDescriptor
 
     virtual bool doesSupport(omnetpp::cObject *obj) const override;
     virtual const char **getPropertyNames() const override;
-    virtual const char *getProperty(const char *propertyname) const override;
+    virtual const char *getProperty(const char *propertyName) const override;
     virtual int getFieldCount() const override;
     virtual const char *getFieldName(int field) const override;
     virtual int findField(const char *fieldName) const override;
     virtual unsigned int getFieldTypeFlags(int field) const override;
     virtual const char *getFieldTypeString(int field) const override;
     virtual const char **getFieldPropertyNames(int field) const override;
-    virtual const char *getFieldProperty(int field, const char *propertyname) const override;
-    virtual int getFieldArraySize(void *object, int field) const override;
+    virtual const char *getFieldProperty(int field, const char *propertyName) const override;
+    virtual int getFieldArraySize(omnetpp::any_ptr object, int field) const override;
+    virtual void setFieldArraySize(omnetpp::any_ptr object, int field, int size) const override;
 
-    virtual const char *getFieldDynamicTypeString(void *object, int field, int i) const override;
-    virtual std::string getFieldValueAsString(void *object, int field, int i) const override;
-    virtual bool setFieldValueAsString(void *object, int field, int i, const char *value) const override;
+    virtual const char *getFieldDynamicTypeString(omnetpp::any_ptr object, int field, int i) const override;
+    virtual std::string getFieldValueAsString(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldValueAsString(omnetpp::any_ptr object, int field, int i, const char *value) const override;
+    virtual omnetpp::cValue getFieldValue(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldValue(omnetpp::any_ptr object, int field, int i, const omnetpp::cValue& value) const override;
 
     virtual const char *getFieldStructName(int field) const override;
-    virtual void *getFieldStructValuePointer(void *object, int field, int i) const override;
+    virtual omnetpp::any_ptr getFieldStructValuePointer(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldStructValuePointer(omnetpp::any_ptr object, int field, int i, omnetpp::any_ptr ptr) const override;
 };
 
 Register_ClassDescriptor(LeachBSPktDescriptor)
 
 LeachBSPktDescriptor::LeachBSPktDescriptor() : omnetpp::cClassDescriptor(omnetpp::opp_typename(typeid(inet::LeachBSPkt)), "inet::LeachControlPkt")
 {
-    propertynames = nullptr;
+    propertyNames = nullptr;
 }
 
 LeachBSPktDescriptor::~LeachBSPktDescriptor()
 {
-    delete[] propertynames;
+    delete[] propertyNames;
 }
 
 bool LeachBSPktDescriptor::doesSupport(omnetpp::cObject *obj) const
@@ -931,34 +1505,34 @@ bool LeachBSPktDescriptor::doesSupport(omnetpp::cObject *obj) const
 
 const char **LeachBSPktDescriptor::getPropertyNames() const
 {
-    if (!propertynames) {
+    if (!propertyNames) {
         static const char *names[] = {  nullptr };
-        omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-        const char **basenames = basedesc ? basedesc->getPropertyNames() : nullptr;
-        propertynames = mergeLists(basenames, names);
+        omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+        const char **baseNames = base ? base->getPropertyNames() : nullptr;
+        propertyNames = mergeLists(baseNames, names);
     }
-    return propertynames;
+    return propertyNames;
 }
 
-const char *LeachBSPktDescriptor::getProperty(const char *propertyname) const
+const char *LeachBSPktDescriptor::getProperty(const char *propertyName) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? basedesc->getProperty(propertyname) : nullptr;
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    return base ? base->getProperty(propertyName) : nullptr;
 }
 
 int LeachBSPktDescriptor::getFieldCount() const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? 1+basedesc->getFieldCount() : 1;
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    return base ? 1+base->getFieldCount() : 1;
 }
 
 unsigned int LeachBSPktDescriptor::getFieldTypeFlags(int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldTypeFlags(field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldTypeFlags(field);
+        field -= base->getFieldCount();
     }
     static unsigned int fieldTypeFlags[] = {
         0,    // FIELD_CHAddr
@@ -968,11 +1542,11 @@ unsigned int LeachBSPktDescriptor::getFieldTypeFlags(int field) const
 
 const char *LeachBSPktDescriptor::getFieldName(int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldName(field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldName(field);
+        field -= base->getFieldCount();
     }
     static const char *fieldNames[] = {
         "CHAddr",
@@ -982,19 +1556,19 @@ const char *LeachBSPktDescriptor::getFieldName(int field) const
 
 int LeachBSPktDescriptor::findField(const char *fieldName) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    int base = basedesc ? basedesc->getFieldCount() : 0;
-    if (fieldName[0] == 'C' && strcmp(fieldName, "CHAddr") == 0) return base+0;
-    return basedesc ? basedesc->findField(fieldName) : -1;
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    int baseIndex = base ? base->getFieldCount() : 0;
+    if (strcmp(fieldName, "CHAddr") == 0) return baseIndex + 0;
+    return base ? base->findField(fieldName) : -1;
 }
 
 const char *LeachBSPktDescriptor::getFieldTypeString(int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldTypeString(field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldTypeString(field);
+        field -= base->getFieldCount();
     }
     static const char *fieldTypeStrings[] = {
         "inet::Ipv4Address",    // FIELD_CHAddr
@@ -1004,114 +1578,825 @@ const char *LeachBSPktDescriptor::getFieldTypeString(int field) const
 
 const char **LeachBSPktDescriptor::getFieldPropertyNames(int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldPropertyNames(field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldPropertyNames(field);
+        field -= base->getFieldCount();
     }
     switch (field) {
         default: return nullptr;
     }
 }
 
-const char *LeachBSPktDescriptor::getFieldProperty(int field, const char *propertyname) const
+const char *LeachBSPktDescriptor::getFieldProperty(int field, const char *propertyName) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldProperty(field, propertyname);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldProperty(field, propertyName);
+        field -= base->getFieldCount();
     }
     switch (field) {
         default: return nullptr;
     }
 }
 
-int LeachBSPktDescriptor::getFieldArraySize(void *object, int field) const
+int LeachBSPktDescriptor::getFieldArraySize(omnetpp::any_ptr object, int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldArraySize(object, field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldArraySize(object, field);
+        field -= base->getFieldCount();
     }
-    LeachBSPkt *pp = (LeachBSPkt *)object; (void)pp;
+    LeachBSPkt *pp = omnetpp::fromAnyPtr<LeachBSPkt>(object); (void)pp;
     switch (field) {
         default: return 0;
     }
 }
 
-const char *LeachBSPktDescriptor::getFieldDynamicTypeString(void *object, int field, int i) const
+void LeachBSPktDescriptor::setFieldArraySize(omnetpp::any_ptr object, int field, int size) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldDynamicTypeString(object,field,i);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldArraySize(object, field, size);
+            return;
+        }
+        field -= base->getFieldCount();
     }
-    LeachBSPkt *pp = (LeachBSPkt *)object; (void)pp;
+    LeachBSPkt *pp = omnetpp::fromAnyPtr<LeachBSPkt>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot set array size of field %d of class 'LeachBSPkt'", field);
+    }
+}
+
+const char *LeachBSPktDescriptor::getFieldDynamicTypeString(omnetpp::any_ptr object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldDynamicTypeString(object,field,i);
+        field -= base->getFieldCount();
+    }
+    LeachBSPkt *pp = omnetpp::fromAnyPtr<LeachBSPkt>(object); (void)pp;
     switch (field) {
         default: return nullptr;
     }
 }
 
-std::string LeachBSPktDescriptor::getFieldValueAsString(void *object, int field, int i) const
+std::string LeachBSPktDescriptor::getFieldValueAsString(omnetpp::any_ptr object, int field, int i) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldValueAsString(object,field,i);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldValueAsString(object,field,i);
+        field -= base->getFieldCount();
     }
-    LeachBSPkt *pp = (LeachBSPkt *)object; (void)pp;
+    LeachBSPkt *pp = omnetpp::fromAnyPtr<LeachBSPkt>(object); (void)pp;
     switch (field) {
         case FIELD_CHAddr: return pp->getCHAddr().str();
         default: return "";
     }
 }
 
-bool LeachBSPktDescriptor::setFieldValueAsString(void *object, int field, int i, const char *value) const
+void LeachBSPktDescriptor::setFieldValueAsString(omnetpp::any_ptr object, int field, int i, const char *value) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->setFieldValueAsString(object,field,i,value);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldValueAsString(object, field, i, value);
+            return;
+        }
+        field -= base->getFieldCount();
     }
-    LeachBSPkt *pp = (LeachBSPkt *)object; (void)pp;
+    LeachBSPkt *pp = omnetpp::fromAnyPtr<LeachBSPkt>(object); (void)pp;
     switch (field) {
-        default: return false;
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'LeachBSPkt'", field);
+    }
+}
+
+omnetpp::cValue LeachBSPktDescriptor::getFieldValue(omnetpp::any_ptr object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldValue(object,field,i);
+        field -= base->getFieldCount();
+    }
+    LeachBSPkt *pp = omnetpp::fromAnyPtr<LeachBSPkt>(object); (void)pp;
+    switch (field) {
+        case FIELD_CHAddr: return omnetpp::toAnyPtr(&pp->getCHAddr()); break;
+        default: throw omnetpp::cRuntimeError("Cannot return field %d of class 'LeachBSPkt' as cValue -- field index out of range?", field);
+    }
+}
+
+void LeachBSPktDescriptor::setFieldValue(omnetpp::any_ptr object, int field, int i, const omnetpp::cValue& value) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldValue(object, field, i, value);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    LeachBSPkt *pp = omnetpp::fromAnyPtr<LeachBSPkt>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'LeachBSPkt'", field);
     }
 }
 
 const char *LeachBSPktDescriptor::getFieldStructName(int field) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldStructName(field);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldStructName(field);
+        field -= base->getFieldCount();
     }
     switch (field) {
         default: return nullptr;
     };
 }
 
-void *LeachBSPktDescriptor::getFieldStructValuePointer(void *object, int field, int i) const
+omnetpp::any_ptr LeachBSPktDescriptor::getFieldStructValuePointer(omnetpp::any_ptr object, int field, int i) const
 {
-    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    if (basedesc) {
-        if (field < basedesc->getFieldCount())
-            return basedesc->getFieldStructValuePointer(object, field, i);
-        field -= basedesc->getFieldCount();
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldStructValuePointer(object, field, i);
+        field -= base->getFieldCount();
     }
-    LeachBSPkt *pp = (LeachBSPkt *)object; (void)pp;
+    LeachBSPkt *pp = omnetpp::fromAnyPtr<LeachBSPkt>(object); (void)pp;
     switch (field) {
-        case FIELD_CHAddr: return toVoidPtr(&pp->getCHAddr()); break;
+        case FIELD_CHAddr: return omnetpp::toAnyPtr(&pp->getCHAddr()); break;
+        default: return omnetpp::any_ptr(nullptr);
+    }
+}
+
+void LeachBSPktDescriptor::setFieldStructValuePointer(omnetpp::any_ptr object, int field, int i, omnetpp::any_ptr ptr) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldStructValuePointer(object, field, i, ptr);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    LeachBSPkt *pp = omnetpp::fromAnyPtr<LeachBSPkt>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'LeachBSPkt'", field);
+    }
+}
+
+Register_Class(LeachAckPkt)
+
+LeachAckPkt::LeachAckPkt() : ::inet::LeachControlPkt()
+{
+}
+
+LeachAckPkt::LeachAckPkt(const LeachAckPkt& other) : ::inet::LeachControlPkt(other)
+{
+    copy(other);
+}
+
+LeachAckPkt::~LeachAckPkt()
+{
+}
+
+LeachAckPkt& LeachAckPkt::operator=(const LeachAckPkt& other)
+{
+    if (this == &other) return *this;
+    ::inet::LeachControlPkt::operator=(other);
+    copy(other);
+    return *this;
+}
+
+void LeachAckPkt::copy(const LeachAckPkt& other)
+{
+}
+
+void LeachAckPkt::parsimPack(omnetpp::cCommBuffer *b) const
+{
+    ::inet::LeachControlPkt::parsimPack(b);
+}
+
+void LeachAckPkt::parsimUnpack(omnetpp::cCommBuffer *b)
+{
+    ::inet::LeachControlPkt::parsimUnpack(b);
+}
+
+class LeachAckPktDescriptor : public omnetpp::cClassDescriptor
+{
+  private:
+    mutable const char **propertyNames;
+    enum FieldConstants {
+    };
+  public:
+    LeachAckPktDescriptor();
+    virtual ~LeachAckPktDescriptor();
+
+    virtual bool doesSupport(omnetpp::cObject *obj) const override;
+    virtual const char **getPropertyNames() const override;
+    virtual const char *getProperty(const char *propertyName) const override;
+    virtual int getFieldCount() const override;
+    virtual const char *getFieldName(int field) const override;
+    virtual int findField(const char *fieldName) const override;
+    virtual unsigned int getFieldTypeFlags(int field) const override;
+    virtual const char *getFieldTypeString(int field) const override;
+    virtual const char **getFieldPropertyNames(int field) const override;
+    virtual const char *getFieldProperty(int field, const char *propertyName) const override;
+    virtual int getFieldArraySize(omnetpp::any_ptr object, int field) const override;
+    virtual void setFieldArraySize(omnetpp::any_ptr object, int field, int size) const override;
+
+    virtual const char *getFieldDynamicTypeString(omnetpp::any_ptr object, int field, int i) const override;
+    virtual std::string getFieldValueAsString(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldValueAsString(omnetpp::any_ptr object, int field, int i, const char *value) const override;
+    virtual omnetpp::cValue getFieldValue(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldValue(omnetpp::any_ptr object, int field, int i, const omnetpp::cValue& value) const override;
+
+    virtual const char *getFieldStructName(int field) const override;
+    virtual omnetpp::any_ptr getFieldStructValuePointer(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldStructValuePointer(omnetpp::any_ptr object, int field, int i, omnetpp::any_ptr ptr) const override;
+};
+
+Register_ClassDescriptor(LeachAckPktDescriptor)
+
+LeachAckPktDescriptor::LeachAckPktDescriptor() : omnetpp::cClassDescriptor(omnetpp::opp_typename(typeid(inet::LeachAckPkt)), "inet::LeachControlPkt")
+{
+    propertyNames = nullptr;
+}
+
+LeachAckPktDescriptor::~LeachAckPktDescriptor()
+{
+    delete[] propertyNames;
+}
+
+bool LeachAckPktDescriptor::doesSupport(omnetpp::cObject *obj) const
+{
+    return dynamic_cast<LeachAckPkt *>(obj)!=nullptr;
+}
+
+const char **LeachAckPktDescriptor::getPropertyNames() const
+{
+    if (!propertyNames) {
+        static const char *names[] = {  nullptr };
+        omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+        const char **baseNames = base ? base->getPropertyNames() : nullptr;
+        propertyNames = mergeLists(baseNames, names);
+    }
+    return propertyNames;
+}
+
+const char *LeachAckPktDescriptor::getProperty(const char *propertyName) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    return base ? base->getProperty(propertyName) : nullptr;
+}
+
+int LeachAckPktDescriptor::getFieldCount() const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    return base ? 0+base->getFieldCount() : 0;
+}
+
+unsigned int LeachAckPktDescriptor::getFieldTypeFlags(int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldTypeFlags(field);
+        field -= base->getFieldCount();
+    }
+    return 0;
+}
+
+const char *LeachAckPktDescriptor::getFieldName(int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldName(field);
+        field -= base->getFieldCount();
+    }
+    return nullptr;
+}
+
+int LeachAckPktDescriptor::findField(const char *fieldName) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    return base ? base->findField(fieldName) : -1;
+}
+
+const char *LeachAckPktDescriptor::getFieldTypeString(int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldTypeString(field);
+        field -= base->getFieldCount();
+    }
+    return nullptr;
+}
+
+const char **LeachAckPktDescriptor::getFieldPropertyNames(int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldPropertyNames(field);
+        field -= base->getFieldCount();
+    }
+    switch (field) {
         default: return nullptr;
     }
 }
 
-} // namespace inet
+const char *LeachAckPktDescriptor::getFieldProperty(int field, const char *propertyName) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldProperty(field, propertyName);
+        field -= base->getFieldCount();
+    }
+    switch (field) {
+        default: return nullptr;
+    }
+}
+
+int LeachAckPktDescriptor::getFieldArraySize(omnetpp::any_ptr object, int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldArraySize(object, field);
+        field -= base->getFieldCount();
+    }
+    LeachAckPkt *pp = omnetpp::fromAnyPtr<LeachAckPkt>(object); (void)pp;
+    switch (field) {
+        default: return 0;
+    }
+}
+
+void LeachAckPktDescriptor::setFieldArraySize(omnetpp::any_ptr object, int field, int size) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldArraySize(object, field, size);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    LeachAckPkt *pp = omnetpp::fromAnyPtr<LeachAckPkt>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot set array size of field %d of class 'LeachAckPkt'", field);
+    }
+}
+
+const char *LeachAckPktDescriptor::getFieldDynamicTypeString(omnetpp::any_ptr object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldDynamicTypeString(object,field,i);
+        field -= base->getFieldCount();
+    }
+    LeachAckPkt *pp = omnetpp::fromAnyPtr<LeachAckPkt>(object); (void)pp;
+    switch (field) {
+        default: return nullptr;
+    }
+}
+
+std::string LeachAckPktDescriptor::getFieldValueAsString(omnetpp::any_ptr object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldValueAsString(object,field,i);
+        field -= base->getFieldCount();
+    }
+    LeachAckPkt *pp = omnetpp::fromAnyPtr<LeachAckPkt>(object); (void)pp;
+    switch (field) {
+        default: return "";
+    }
+}
+
+void LeachAckPktDescriptor::setFieldValueAsString(omnetpp::any_ptr object, int field, int i, const char *value) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldValueAsString(object, field, i, value);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    LeachAckPkt *pp = omnetpp::fromAnyPtr<LeachAckPkt>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'LeachAckPkt'", field);
+    }
+}
+
+omnetpp::cValue LeachAckPktDescriptor::getFieldValue(omnetpp::any_ptr object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldValue(object,field,i);
+        field -= base->getFieldCount();
+    }
+    LeachAckPkt *pp = omnetpp::fromAnyPtr<LeachAckPkt>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot return field %d of class 'LeachAckPkt' as cValue -- field index out of range?", field);
+    }
+}
+
+void LeachAckPktDescriptor::setFieldValue(omnetpp::any_ptr object, int field, int i, const omnetpp::cValue& value) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldValue(object, field, i, value);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    LeachAckPkt *pp = omnetpp::fromAnyPtr<LeachAckPkt>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'LeachAckPkt'", field);
+    }
+}
+
+const char *LeachAckPktDescriptor::getFieldStructName(int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldStructName(field);
+        field -= base->getFieldCount();
+    }
+    return nullptr;
+}
+
+omnetpp::any_ptr LeachAckPktDescriptor::getFieldStructValuePointer(omnetpp::any_ptr object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldStructValuePointer(object, field, i);
+        field -= base->getFieldCount();
+    }
+    LeachAckPkt *pp = omnetpp::fromAnyPtr<LeachAckPkt>(object); (void)pp;
+    switch (field) {
+        default: return omnetpp::any_ptr(nullptr);
+    }
+}
+
+void LeachAckPktDescriptor::setFieldStructValuePointer(omnetpp::any_ptr object, int field, int i, omnetpp::any_ptr ptr) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldStructValuePointer(object, field, i, ptr);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    LeachAckPkt *pp = omnetpp::fromAnyPtr<LeachAckPkt>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'LeachAckPkt'", field);
+    }
+}
+
+Register_Class(LeachSchedulePkt)
+
+LeachSchedulePkt::LeachSchedulePkt() : ::inet::LeachControlPkt()
+{
+}
+
+LeachSchedulePkt::LeachSchedulePkt(const LeachSchedulePkt& other) : ::inet::LeachControlPkt(other)
+{
+    copy(other);
+}
+
+LeachSchedulePkt::~LeachSchedulePkt()
+{
+}
+
+LeachSchedulePkt& LeachSchedulePkt::operator=(const LeachSchedulePkt& other)
+{
+    if (this == &other) return *this;
+    ::inet::LeachControlPkt::operator=(other);
+    copy(other);
+    return *this;
+}
+
+void LeachSchedulePkt::copy(const LeachSchedulePkt& other)
+{
+}
+
+void LeachSchedulePkt::parsimPack(omnetpp::cCommBuffer *b) const
+{
+    ::inet::LeachControlPkt::parsimPack(b);
+}
+
+void LeachSchedulePkt::parsimUnpack(omnetpp::cCommBuffer *b)
+{
+    ::inet::LeachControlPkt::parsimUnpack(b);
+}
+
+class LeachSchedulePktDescriptor : public omnetpp::cClassDescriptor
+{
+  private:
+    mutable const char **propertyNames;
+    enum FieldConstants {
+    };
+  public:
+    LeachSchedulePktDescriptor();
+    virtual ~LeachSchedulePktDescriptor();
+
+    virtual bool doesSupport(omnetpp::cObject *obj) const override;
+    virtual const char **getPropertyNames() const override;
+    virtual const char *getProperty(const char *propertyName) const override;
+    virtual int getFieldCount() const override;
+    virtual const char *getFieldName(int field) const override;
+    virtual int findField(const char *fieldName) const override;
+    virtual unsigned int getFieldTypeFlags(int field) const override;
+    virtual const char *getFieldTypeString(int field) const override;
+    virtual const char **getFieldPropertyNames(int field) const override;
+    virtual const char *getFieldProperty(int field, const char *propertyName) const override;
+    virtual int getFieldArraySize(omnetpp::any_ptr object, int field) const override;
+    virtual void setFieldArraySize(omnetpp::any_ptr object, int field, int size) const override;
+
+    virtual const char *getFieldDynamicTypeString(omnetpp::any_ptr object, int field, int i) const override;
+    virtual std::string getFieldValueAsString(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldValueAsString(omnetpp::any_ptr object, int field, int i, const char *value) const override;
+    virtual omnetpp::cValue getFieldValue(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldValue(omnetpp::any_ptr object, int field, int i, const omnetpp::cValue& value) const override;
+
+    virtual const char *getFieldStructName(int field) const override;
+    virtual omnetpp::any_ptr getFieldStructValuePointer(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldStructValuePointer(omnetpp::any_ptr object, int field, int i, omnetpp::any_ptr ptr) const override;
+};
+
+Register_ClassDescriptor(LeachSchedulePktDescriptor)
+
+LeachSchedulePktDescriptor::LeachSchedulePktDescriptor() : omnetpp::cClassDescriptor(omnetpp::opp_typename(typeid(inet::LeachSchedulePkt)), "inet::LeachControlPkt")
+{
+    propertyNames = nullptr;
+}
+
+LeachSchedulePktDescriptor::~LeachSchedulePktDescriptor()
+{
+    delete[] propertyNames;
+}
+
+bool LeachSchedulePktDescriptor::doesSupport(omnetpp::cObject *obj) const
+{
+    return dynamic_cast<LeachSchedulePkt *>(obj)!=nullptr;
+}
+
+const char **LeachSchedulePktDescriptor::getPropertyNames() const
+{
+    if (!propertyNames) {
+        static const char *names[] = {  nullptr };
+        omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+        const char **baseNames = base ? base->getPropertyNames() : nullptr;
+        propertyNames = mergeLists(baseNames, names);
+    }
+    return propertyNames;
+}
+
+const char *LeachSchedulePktDescriptor::getProperty(const char *propertyName) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    return base ? base->getProperty(propertyName) : nullptr;
+}
+
+int LeachSchedulePktDescriptor::getFieldCount() const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    return base ? 0+base->getFieldCount() : 0;
+}
+
+unsigned int LeachSchedulePktDescriptor::getFieldTypeFlags(int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldTypeFlags(field);
+        field -= base->getFieldCount();
+    }
+    return 0;
+}
+
+const char *LeachSchedulePktDescriptor::getFieldName(int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldName(field);
+        field -= base->getFieldCount();
+    }
+    return nullptr;
+}
+
+int LeachSchedulePktDescriptor::findField(const char *fieldName) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    return base ? base->findField(fieldName) : -1;
+}
+
+const char *LeachSchedulePktDescriptor::getFieldTypeString(int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldTypeString(field);
+        field -= base->getFieldCount();
+    }
+    return nullptr;
+}
+
+const char **LeachSchedulePktDescriptor::getFieldPropertyNames(int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldPropertyNames(field);
+        field -= base->getFieldCount();
+    }
+    switch (field) {
+        default: return nullptr;
+    }
+}
+
+const char *LeachSchedulePktDescriptor::getFieldProperty(int field, const char *propertyName) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldProperty(field, propertyName);
+        field -= base->getFieldCount();
+    }
+    switch (field) {
+        default: return nullptr;
+    }
+}
+
+int LeachSchedulePktDescriptor::getFieldArraySize(omnetpp::any_ptr object, int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldArraySize(object, field);
+        field -= base->getFieldCount();
+    }
+    LeachSchedulePkt *pp = omnetpp::fromAnyPtr<LeachSchedulePkt>(object); (void)pp;
+    switch (field) {
+        default: return 0;
+    }
+}
+
+void LeachSchedulePktDescriptor::setFieldArraySize(omnetpp::any_ptr object, int field, int size) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldArraySize(object, field, size);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    LeachSchedulePkt *pp = omnetpp::fromAnyPtr<LeachSchedulePkt>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot set array size of field %d of class 'LeachSchedulePkt'", field);
+    }
+}
+
+const char *LeachSchedulePktDescriptor::getFieldDynamicTypeString(omnetpp::any_ptr object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldDynamicTypeString(object,field,i);
+        field -= base->getFieldCount();
+    }
+    LeachSchedulePkt *pp = omnetpp::fromAnyPtr<LeachSchedulePkt>(object); (void)pp;
+    switch (field) {
+        default: return nullptr;
+    }
+}
+
+std::string LeachSchedulePktDescriptor::getFieldValueAsString(omnetpp::any_ptr object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldValueAsString(object,field,i);
+        field -= base->getFieldCount();
+    }
+    LeachSchedulePkt *pp = omnetpp::fromAnyPtr<LeachSchedulePkt>(object); (void)pp;
+    switch (field) {
+        default: return "";
+    }
+}
+
+void LeachSchedulePktDescriptor::setFieldValueAsString(omnetpp::any_ptr object, int field, int i, const char *value) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldValueAsString(object, field, i, value);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    LeachSchedulePkt *pp = omnetpp::fromAnyPtr<LeachSchedulePkt>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'LeachSchedulePkt'", field);
+    }
+}
+
+omnetpp::cValue LeachSchedulePktDescriptor::getFieldValue(omnetpp::any_ptr object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldValue(object,field,i);
+        field -= base->getFieldCount();
+    }
+    LeachSchedulePkt *pp = omnetpp::fromAnyPtr<LeachSchedulePkt>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot return field %d of class 'LeachSchedulePkt' as cValue -- field index out of range?", field);
+    }
+}
+
+void LeachSchedulePktDescriptor::setFieldValue(omnetpp::any_ptr object, int field, int i, const omnetpp::cValue& value) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldValue(object, field, i, value);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    LeachSchedulePkt *pp = omnetpp::fromAnyPtr<LeachSchedulePkt>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'LeachSchedulePkt'", field);
+    }
+}
+
+const char *LeachSchedulePktDescriptor::getFieldStructName(int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldStructName(field);
+        field -= base->getFieldCount();
+    }
+    return nullptr;
+}
+
+omnetpp::any_ptr LeachSchedulePktDescriptor::getFieldStructValuePointer(omnetpp::any_ptr object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldStructValuePointer(object, field, i);
+        field -= base->getFieldCount();
+    }
+    LeachSchedulePkt *pp = omnetpp::fromAnyPtr<LeachSchedulePkt>(object); (void)pp;
+    switch (field) {
+        default: return omnetpp::any_ptr(nullptr);
+    }
+}
+
+void LeachSchedulePktDescriptor::setFieldStructValuePointer(omnetpp::any_ptr object, int field, int i, omnetpp::any_ptr ptr) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldStructValuePointer(object, field, i, ptr);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    LeachSchedulePkt *pp = omnetpp::fromAnyPtr<LeachSchedulePkt>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'LeachSchedulePkt'", field);
+    }
+}
+
+}  // namespace inet
+
+namespace omnetpp {
+
+}  // namespace omnetpp
 

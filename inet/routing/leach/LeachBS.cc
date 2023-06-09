@@ -21,7 +21,7 @@
 #include "inet/linklayer/common/InterfaceTag_m.h"
 #include "inet/networklayer/common/L3AddressTag_m.h"
 #include "inet/routing/leach/Leach.h"
-#include "inet/physicallayer/contract/packetlevel/SignalTag_m.h"
+#include "inet/physicallayer/wireless/common/contract/packetlevel/SignalTag_m.h"
 
 #include <iostream>
 #include <fstream>
@@ -73,8 +73,8 @@ namespace inet {
     void LeachBS::start() {
             /* Search the 80211 interface */
             int  num_80211 = 0;
-            InterfaceEntry *ie;
-            InterfaceEntry *i_face;
+            NetworkInterface *ie;
+            NetworkInterface *i_face;
             const char *name;
 
             for (int i = 0; i < ift->getNumInterfaces(); i++)
@@ -95,7 +95,7 @@ namespace inet {
             else
                 throw cRuntimeError("DSDV has found %i 80211 interfaces", num_80211);
 
-            CHK(interface80211ptr->getProtocolData<Ipv4InterfaceData>())->joinMulticastGroup(Ipv4Address::LL_MANET_ROUTERS);
+            CHK(interface80211ptr->getProtocolDataForUpdate<Ipv4InterfaceData>())->joinMulticastGroup(Ipv4Address::LL_MANET_ROUTERS);
     }
 
     void LeachBS::stop() {
